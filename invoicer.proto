@@ -1,4 +1,27 @@
-syntax = "proto3"
+syntax = "proto3";
+option go_package = "github.com/rima971/first-grpc/invoicer";
+
+message Amount {
+    int64 amount = 1;
+    string currency = 2;
+}
+
+message Invoice {
+    Amount amount = 1;
+    string from = 2;
+    string to = 3;
+}
+
+message CreateRequest {
+    Amount amount = 1;
+    string from = 2;
+    string to = 3;
+}
+
+message CreateResponse {
+    Invoice invoice = 1;
+    string message =2;
+}
 
 service Invoicer {
     rpc Create(CreateRequest) returns (CreateResponse);

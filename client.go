@@ -13,7 +13,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not connect: %s", err)
 	}
-	defer conn.Close()
+	defer func(conn *grpc.ClientConn) {
+		err := conn.Close()
+		if err != nil {
+			log.Fatalf("error occured while closing the connection: %s", err)
+		}
+	}(conn)
 
 	i := invoicer.NewInvoicerClient(conn)
 
